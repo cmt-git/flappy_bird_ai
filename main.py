@@ -9,10 +9,7 @@ pygame.font.init()
 WIN_WIDTH = 400
 WIN_HEIGHT = 600
 
-# Original Directory => "D:\\Programming\\Python\\FinalsFlappyBird\\flappybird_ai\\imgs"
-# C:\\Users\\Lorenzo\\Downloads\\flappybird_ai-main\\flappybird_ai-main\\imgs
-
-GEN = 0
+GEN = -1
 
 BIRD_IMGS = [pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird_0.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird_1.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird_2.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird_3.png")))]
 PIPE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "pipe.png")))
@@ -234,10 +231,6 @@ def eval_gnomes(gnomes, config):
           birds.pop(x)
           nets.pop(x)
           ge.pop(x)
-        if keyboard.is_pressed('space'):
-          birds.pop(x)
-          nets.pop(x)
-          ge.pop(x)
 
         if not pipe.passed and pipe.x < bird.x:
           pipe.passed = True
@@ -263,10 +256,18 @@ def eval_gnomes(gnomes, config):
         birds.pop(x)
         nets.pop(x)
         ge.pop(x)
-      if keyboard.is_pressed('space'):
+
+    if keyboard.is_pressed('space') and score > 0:
+      for x, bird in enumerate(birds):
         birds.pop(x)
         nets.pop(x)
         ge.pop(x)
+      for x, bird in enumerate(birds):
+        birds.pop(x)
+        nets.pop(x)
+        ge.pop(x)
+      GEN = -1
+      run == False
 
     base.move()
     draw_window(win=win, birds=birds, pipes=pipes, base=base, score=score, gen=GEN)
