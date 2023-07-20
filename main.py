@@ -14,10 +14,10 @@ WIN_HEIGHT = 600
 
 GEN = 0
 
-BIRD_IMGS = [pygame.transform.scale2x(pygame.image.load(os.path.join("C:\\Users\\Lorenzo\\Downloads\\flappybird_ai-main\\flappybird_ai-main\\imgs", "bird_0.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("C:\\Users\\Lorenzo\\Downloads\\flappybird_ai-main\\flappybird_ai-main\\imgs", "bird_1.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("C:\\Users\\Lorenzo\\Downloads\\flappybird_ai-main\\flappybird_ai-main\\imgs", "bird_2.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("C:\\Users\\Lorenzo\\Downloads\\flappybird_ai-main\\flappybird_ai-main\\imgs", "bird_3.png")))]
-PIPE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("C:\\Users\\Lorenzo\\Downloads\\flappybird_ai-main\\flappybird_ai-main\\imgs", "pipe.png")))
-BG_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("C:\\Users\\Lorenzo\\Downloads\\flappybird_ai-main\\flappybird_ai-main\\imgs", "bg.png")))
-BASE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("C:\\Users\\Lorenzo\\Downloads\\flappybird_ai-main\\flappybird_ai-main\\imgs", "base.png")))
+BIRD_IMGS = [pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird_0.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird_1.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird_2.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird_3.png")))]
+PIPE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "pipe.png")))
+BG_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bg.png")))
+BASE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "base.png")))
 
 STAT_FONT = pygame.font.SysFont("comicsans", 30)
 
@@ -231,6 +231,10 @@ def eval_gnomes(gnomes, config):
       for x, bird in enumerate(birds):
         if pipe.collide(bird=bird):
           ge[x].fitness -= 1
+          birds.pop(x)
+          nets.pop(x)
+          ge.pop(x)
+        if keyboard.is_pressed('space'):
           birds.pop(x)
           nets.pop(x)
           ge.pop(x)
