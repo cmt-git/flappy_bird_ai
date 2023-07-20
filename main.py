@@ -3,15 +3,21 @@ import neat
 import time
 import os
 import random
+import keyboard
 pygame.font.init()
 
 WIN_WIDTH = 400
 WIN_HEIGHT = 600
 
-BIRD_IMGS = [pygame.transform.scale2x(pygame.image.load(os.path.join("D:\\Programming\\Python\\FinalsFlappyBird\\flappybird_ai\\imgs", "bird_0.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("D:\\Programming\\Python\\FinalsFlappyBird\\flappybird_ai\\imgs", "bird_1.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("D:\\Programming\\Python\\FinalsFlappyBird\\flappybird_ai\\imgs", "bird_2.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("D:\\Programming\\Python\\FinalsFlappyBird\\flappybird_ai\\imgs", "bird_3.png")))]
-PIPE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("D:\\Programming\\Python\\FinalsFlappyBird\\flappybird_ai\\imgs", "pipe.png")))
-BG_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("D:\\Programming\\Python\\FinalsFlappyBird\\flappybird_ai\\imgs", "bg.png")))
-BASE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("D:\\Programming\\Python\\FinalsFlappyBird\\flappybird_ai\\imgs", "base.png")))
+# Original Directory => "D:\\Programming\\Python\\FinalsFlappyBird\\flappybird_ai\\imgs"
+# C:\\Users\\Lorenzo\\Downloads\\flappybird_ai-main\\flappybird_ai-main\\imgs
+
+GEN = 0
+
+BIRD_IMGS = [pygame.transform.scale2x(pygame.image.load(os.path.join("C:\\Users\\Lorenzo\\Downloads\\flappybird_ai-main\\flappybird_ai-main\\imgs", "bird_0.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("C:\\Users\\Lorenzo\\Downloads\\flappybird_ai-main\\flappybird_ai-main\\imgs", "bird_1.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("C:\\Users\\Lorenzo\\Downloads\\flappybird_ai-main\\flappybird_ai-main\\imgs", "bird_2.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("C:\\Users\\Lorenzo\\Downloads\\flappybird_ai-main\\flappybird_ai-main\\imgs", "bird_3.png")))]
+PIPE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("C:\\Users\\Lorenzo\\Downloads\\flappybird_ai-main\\flappybird_ai-main\\imgs", "pipe.png")))
+BG_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("C:\\Users\\Lorenzo\\Downloads\\flappybird_ai-main\\flappybird_ai-main\\imgs", "bg.png")))
+BASE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("C:\\Users\\Lorenzo\\Downloads\\flappybird_ai-main\\flappybird_ai-main\\imgs", "base.png")))
 
 STAT_FONT = pygame.font.SysFont("comicsans", 30)
 
@@ -153,15 +159,18 @@ class Base:
         win.blit(self.IMG, (self.x1, self.y))
         win.blit(self.IMG, (self.x2, self.y))
 
-def draw_window(win, birds, pipes, base, score):
+def draw_window(win, birds, pipes, base, score, gen):
   win.blit(BG_IMG, (0, 0))
   for pipe in pipes:
     pipe.draw(win)
 
   base.draw(win)
-  
+
   text = STAT_FONT.render("Score: " + str(score), 1, (255, 255, 255))
   win.blit(text, (WIN_WIDTH - 10 - text.get_width(), 10))
+
+  text = STAT_FONT.render("Gen: " + str(gen), 1, (255, 255, 255))
+  win.blit(text, (10, 10))
 
   for bird in birds:
     bird.draw(win)
@@ -169,6 +178,8 @@ def draw_window(win, birds, pipes, base, score):
   pygame.display.update()
 
 def eval_gnomes(gnomes, config):
+  global GEN
+  GEN += 1
   nets = []
   ge = []
 
@@ -248,9 +259,13 @@ def eval_gnomes(gnomes, config):
         birds.pop(x)
         nets.pop(x)
         ge.pop(x)
+      if keyboard.is_pressed('space'):
+        birds.pop(x)
+        nets.pop(x)
+        ge.pop(x)
 
     base.move()
-    draw_window(win=win, birds=birds, pipes=pipes, base=base, score=score)
+    draw_window(win=win, birds=birds, pipes=pipes, base=base, score=score, gen=GEN)
 
   # pygame.quit()
   # quit()
@@ -271,4 +286,3 @@ if __name__ == "__main__":
   local_directory = os.path.dirname(__file__)
   config_path = os.path.join(local_directory, "config-feedforward.txt")
   run(config_path)
-
