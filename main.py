@@ -6,8 +6,9 @@ import random
 import keyboard
 pygame.font.init()
 
-WIN_WIDTH = 400
-WIN_HEIGHT = 600
+# 400, 600
+WIN_WIDTH = 900
+WIN_HEIGHT = 700
 
 # Original Directory => "D:\\Programming\\Python\\FinalsFlappyBird\\flappybird_ai\\imgs"
 # C:\\Users\\Lorenzo\\Downloads\\flappybird_ai-main\\flappybird_ai-main\\imgs
@@ -16,7 +17,7 @@ GEN = 0
 
 BIRD_IMGS = [pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird_0.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird_1.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird_2.png"))), pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bird_3.png")))]
 PIPE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "pipe.png")))
-BG_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bg.png")))
+BG_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bg-ext.png")))
 BASE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "base.png")))
 
 STAT_FONT = pygame.font.SysFont("comicsans", 30)
@@ -192,8 +193,9 @@ def eval_gnomes(gnomes, config):
     gnome.fitness = 0
     ge.append(gnome)
 
-  pipes = [Pipe(350), Pipe(600), Pipe(850)]
-  base = Base(550)
+  #previous values 350, 600, 850
+  pipes = [Pipe(300), Pipe(600), Pipe(900)]
+  base = Base(600)
   win = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
   clock = pygame.time.Clock()
 
@@ -253,7 +255,7 @@ def eval_gnomes(gnomes, config):
       for gnome in ge:
         gnome.fitness += 5
 
-      pipes.append(Pipe(750))
+      pipes.append(Pipe(900))
 
     for pipe_to_remove in to_remove:
       pipes.remove(pipe_to_remove)
